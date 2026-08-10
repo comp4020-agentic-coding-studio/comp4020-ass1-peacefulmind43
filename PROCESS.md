@@ -1,76 +1,62 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
-
-This file is the shape; the course site's
-[assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
-is the requirement, and its
-[word counts](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#word-counts)
-cover every deliverable.
-
-## What I built
-
-One paragraph: the thing, and the idea behind it.
+A Sydney house-price predictor: pick a suburb and drag bed/bath/car sliders,
+and watch a live prediction from a model trained on 9,714 real house sales
+(2017–2019) across the 30 Sydney suburbs with the most sales in that period.
+Below the price, the prediction is broken into signed dollar bars — suburb,
+bedrooms, bathrooms, car spaces — all drawn on one shared scale, so the point
+of the whole prototype is visible at a glance: which suburb a house is in
+moves its price far more than an extra bedroom does.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+1. **Restarting this repo's commit history because it didn't show real
+   process, even though the code behind it was fine.** Partway through
+   building this, I noticed that most of the substantive commits had landed
+   within an 18-minute window — the checks were genuinely green and the
+   content was real, but the log didn't show any moment where a result got
+   looked at before it got committed. Since this assignment weights process
+   evidence at 45%, I treated that as a real defect, not a cosmetic one:
+   [`1343f94...2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/compare/1343f94...2249267)
+   is the same prototype rebuilt with one rule: nothing gets committed until
+   I've run the checks myself, or watched the page do the right thing myself,
+   and said so.
+2. **Proving the trained model correct without shipping — or even
+   committing — the data it was trained on.** The raw 11MB CSV never enters
+   the repo, so the spec's identity check (predicting at a suburb's own
+   average house must equal that suburb's own average sale price — a real
+   mathematical property of fixed-effects OLS, not a tolerance-band guess)
+   had nothing committed to check against. The training script also writes
+   `data/training-stats.json`, small per-suburb aggregates computed by plain
+   averaging — a code path independent of the OLS solve — so the spec test
+   catches a genuine training-pipeline bug (wrong centering, misaligned dummy
+   columns) using only committed, non-raw data —
+   [`9683619`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/9683619),
+   [`8ba4c25`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/8ba4c25).
+3. **Verifying every control by driving the built page, not by reading the
+   listener code.** Once the UI was wired up I opened it with `agent-browser`
+   and actually operated every control — changed the suburb, dragged each
+   slider — at both marking viewports rather than trusting that the markup
+   looked right, and only accepted the commit once the price and every bar
+   visibly moved in response at 1920×1080 and 390×844 —
+   [`374e0ff`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/374e0ff).
+4. **Closing a gap this file itself named out loud.** The starter's
+   `CLAUDE.md` said plainly that nothing here measured accessibility. Rather
+   than leave that as a disclaimer, `spec/accessibility.test.ts` now runs
+   `axe-core` against the built page as part of `pnpm check`, with
+   `color-contrast` disabled (it needs real paint, which `jsdom` doesn't have)
+   —
+   [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267).
 
-1. **what happened** --- the problem, or the thing the agent got wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+## A note on how this week was directed
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. The strongest moments are the ones where a correction
-landed in the **harness** rather than in another prompt --- a rule added to
-`CLAUDE.md`, a check wired up, an attempt thrown away: re-prompting until it
-passes is the routine case, and changing what the agent works against is the
-skilled one.
-
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
-
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
-
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
-
-> the prompt, verbatim
-
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
-
-### A worked moment, for shape
-
-Delete this section along with the rest of the boilerplate --- it's here to show
-the four jobs in one paragraph, not to be imitated in content.
-
-> The date formatter kept coming back with `toLocaleDateString()` and no locale
-> argument, so the same build rendered differently on my machine and in CI. I'd
-> already re-prompted it twice, which fixed the line but not the habit, so the
-> third time I put the rule in `CLAUDE.md` instead
-> ([`3f9ac21`](https://github.com/YOUR-ORG/YOUR-REPO/commit/3f9ac21)) and added
-> a spec test that fails on a bare `toLocaleDateString`. That's what told me it
-> had actually taken: the test went red against the old code and green against
-> the new, and the next two features it wrote passed it without prompting
-> ([`3f9ac21...b7e0d14`](https://github.com/YOUR-ORG/YOUR-REPO/compare/3f9ac21...b7e0d14)).
+I chose the topic (a real-data house-price predictor over fixed-effects OLS),
+the point of view (suburb dominates bed/bath/car), and — after noticing the
+commit-history problem above — the decision to rebuild this repo's history one
+verified step at a time. Within that frame, the agent carried out the data
+sourcing, model design, spec-test design, and UI build, with me reviewing the
+actual trained coefficients and the actual rendered page — not just green
+checks — before signing off on each commit.
 
 ## Before you ship
 
