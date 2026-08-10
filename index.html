@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COMP4020 prototype</title>
+    <title>What actually moves a Sydney house price</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -13,10 +13,104 @@
       </nav>
     </header>
     <main>
-      <h1>COMP4020 prototype</h1>
-      <p data-testid="intro">
-        Replace this with your prototype. This week's brief is on the course website;
-        <code>spec/README.md</code> explains how the checks in this repo relate to it.
+      <h1 id="headline">Suburb moves a Sydney house price far more than another bedroom does.</h1>
+      <p>
+        Trained on 9,714 real house sales (2017&ndash;2019) across the 30
+        Sydney suburbs with the most sales in that period, using ordinary
+        least squares: one dollar coefficient per suburb, plus one per
+        bedroom, bathroom, and car space. Drag the controls &mdash; the price
+        and the bars below it are the model's live prediction, not a lookup.
+      </p>
+
+      <fieldset>
+        <legend>Suburb</legend>
+        <select id="suburb" aria-label="Suburb"></select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Bedrooms</legend>
+        <div class="slider-row">
+          <input type="range" id="bed" aria-label="Bedrooms" />
+          <output id="bed-value" for="bed"></output>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Bathrooms</legend>
+        <div class="slider-row">
+          <input type="range" id="bath" aria-label="Bathrooms" />
+          <output id="bath-value" for="bath"></output>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Car spaces</legend>
+        <div class="slider-row">
+          <input type="range" id="car" aria-label="Car spaces" />
+          <output id="car-value" for="car"></output>
+        </div>
+      </fieldset>
+
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-label">Estimated price</span>
+          <output class="stat-value" id="price-value" aria-live="polite"></output>
+        </div>
+      </div>
+
+      <p id="base-caption" class="caption-note"></p>
+
+      <h2>Why: the price broken into its parts</h2>
+      <p class="caption-note">
+        Every bar is drawn on the same dollar scale, so the bar lengths are
+        directly comparable &mdash; and the suburb bar dwarfing the others is
+        the whole point.
+      </p>
+
+      <div class="bar-row" id="suburb-row">
+        <span class="bar-label">Suburb</span>
+        <div class="bar-track">
+          <div class="bar-neg" id="suburb-neg"><div class="bar-fill bar-fill-neg"></div></div>
+          <div class="bar-center"></div>
+          <div class="bar-pos" id="suburb-pos"><div class="bar-fill bar-fill-pos"></div></div>
+        </div>
+        <output class="bar-value" id="suburb-value"></output>
+      </div>
+
+      <div class="bar-row" id="bed-row">
+        <span class="bar-label">Bedrooms</span>
+        <div class="bar-track">
+          <div class="bar-neg" id="bed-neg"><div class="bar-fill bar-fill-neg"></div></div>
+          <div class="bar-center"></div>
+          <div class="bar-pos" id="bed-pos"><div class="bar-fill bar-fill-pos"></div></div>
+        </div>
+        <output class="bar-value" id="bed-effect-value"></output>
+      </div>
+
+      <div class="bar-row" id="bath-row">
+        <span class="bar-label">Bathrooms</span>
+        <div class="bar-track">
+          <div class="bar-neg" id="bath-neg"><div class="bar-fill bar-fill-neg"></div></div>
+          <div class="bar-center"></div>
+          <div class="bar-pos" id="bath-pos"><div class="bar-fill bar-fill-pos"></div></div>
+        </div>
+        <output class="bar-value" id="bath-effect-value"></output>
+      </div>
+
+      <div class="bar-row" id="car-row">
+        <span class="bar-label">Car spaces</span>
+        <div class="bar-track">
+          <div class="bar-neg" id="car-neg"><div class="bar-fill bar-fill-neg"></div></div>
+          <div class="bar-center"></div>
+          <div class="bar-pos" id="car-pos"><div class="bar-fill bar-fill-pos"></div></div>
+        </div>
+        <output class="bar-value" id="car-effect-value"></output>
+      </div>
+
+      <p class="caption-note">
+        This is a prototype trained on a public mirror of the Kaggle "Sydney
+        House Prices" dataset, not a valuation tool &mdash; it has no view of
+        a specific property's condition, land size, or renovation history.
       </p>
     </main>
     <script type="module" src="./main.ts"></script>

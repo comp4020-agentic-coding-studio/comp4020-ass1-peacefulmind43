@@ -2,6 +2,10 @@ node_modules/
 dist/
 *.log
 
+# raw training data is downloaded on demand by scripts/train-model.ts, not
+# committed -- only its small derived output (data/model.json) is tracked
+scripts/.cache/
+
 # editor and OS junk
 .DS_Store
 ._*
