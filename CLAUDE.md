@@ -161,3 +161,24 @@ catching you out, a fact about the stack the agent keeps getting wrong --- write
 it down here. Growing this file is the work of harness engineering, and the gap
 between this boilerplate and your own version is part of what your prototype
 says about the developer you're becoming.
+
+## Rules learned this week
+
+- **A trained model can be checked for a real bug without shipping or even
+  committing the raw data it was trained on.** The raw CSV never enters the
+  repo, but the training script also writes a small `data/training-stats.json`
+  -- per-group means computed by plain averaging, a code path independent of
+  the OLS solve. The spec test then checks a genuine mathematical identity
+  (predicting at a suburb's own mean bed/bath/car must equal that suburb's own
+  mean sale price) instead of eyeballing whether the coefficients look
+  plausible. A bug in the design matrix or centering breaks this identity even
+  though the maths guarantees it whenever the pipeline is right -- so it's a
+  real correctness check, not a vibe check.
+- **Don't trust that a listener is wired right just because the code reads
+  right -- drive the actual control and watch the output change.** Scripting
+  the interaction (`agent-browser select @e5 Mosman`) changed the `<select>`'s
+  DOM value but never triggered the page's `input`-only listener, so the price
+  silently stayed put while the sliders worked fine. `<select>` doesn't
+  reliably fire `input` on every path that changes its value, so both `input`
+  and `change` get wired on every control now. A glance at the code would have
+  looked correct; only actually operating the control caught it.
