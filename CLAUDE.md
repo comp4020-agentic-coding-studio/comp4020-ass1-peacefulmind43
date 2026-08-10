@@ -90,11 +90,16 @@ running counts as not green, so ship with time for CI to finish.
   blocks any commit containing something shaped like an API key --- by the time
   CI sees a key it's already pushed, so the hook is the sensor that matters.
 
-Nothing here measures **accessibility** or **performance** --- wiring those
-sensors (`axe-core`, Lighthouse, or whatever you choose) is your work, and later
-in the course the spec will ask you to show how you tested both. When you do,
-read a green performance result honestly: it's a lab estimate from one run on a
-CI machine, not proof the site is fast for real users.
+**Accessibility** is now measured: `spec/accessibility.test.ts` runs `axe-core`
+against every built page and runs with everything else in `pnpm check`, so a
+real violation fails the same way a broken build does. `color-contrast` is
+disabled there because it needs real layout/paint that `jsdom` doesn't have ---
+that one's still a look-at-the-screenshot check, not an automated one.
+**Performance** is still unmeasured --- wiring that sensor (Lighthouse or
+whatever you choose) is your work, and later in the course the spec will ask
+you to show how you tested it. When you do, read a green result honestly: it's
+a lab estimate from one run on a CI machine, not proof the site is fast for
+real users.
 
 ## The stack is swappable
 
@@ -182,3 +187,12 @@ says about the developer you're becoming.
   reliably fire `input` on every path that changes its value, so both `input`
   and `change` get wired on every control now. A glance at the code would have
   looked correct; only actually operating the control caught it.
+- **A gap this file names out loud ("nothing here measures accessibility")
+  is a to-do, not a disclaimer -- wire the sensor instead of leaving the note.**
+  `axe-core` against jsdom needs an `Element` as its context argument, not a
+  `Document` -- it deduces the missing `window`/`document` globals from
+  `context.ownerDocument`, which only an `Element` has, so passing the
+  document itself throws even though it reads like the more obvious call. It
+  passed clean on the first real run, which isn't proof of nothing to fix:
+  `color-contrast` is disabled because `jsdom` can't paint, so it's still a
+  screenshot check, not this one.
