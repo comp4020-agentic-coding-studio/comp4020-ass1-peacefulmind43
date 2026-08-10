@@ -1,0 +1,212 @@
+{
+  "Auburn": {
+    "meanPrice": 964545.8333333334,
+    "meanBed": 3.404166666666667,
+    "meanBath": 1.6416666666666666,
+    "meanCar": 1.7916666666666667,
+    "count": 240
+  },
+  "Baulkham Hills": {
+    "meanPrice": 1192641.1281512605,
+    "meanBed": 3.802521008403361,
+    "meanBath": 1.9579831932773109,
+    "meanCar": 1.9264705882352942,
+    "count": 476
+  },
+  "Blacktown": {
+    "meanPrice": 742212.1098696461,
+    "meanBed": 3.4878957169459963,
+    "meanBath": 1.5605214152700186,
+    "meanCar": 1.7616387337057728,
+    "count": 537
+  },
+  "Carlingford": {
+    "meanPrice": 1440667.7777777778,
+    "meanBed": 3.9012345679012346,
+    "meanBath": 2.0534979423868314,
+    "meanCar": 2.045267489711934,
+    "count": 243
+  },
+  "Castle Hill": {
+    "meanPrice": 1548562.5892857143,
+    "meanBed": 4.185714285714286,
+    "meanBath": 2.4214285714285713,
+    "meanCar": 2.1589285714285715,
+    "count": 560
+  },
+  "Cherrybrook": {
+    "meanPrice": 1523295.0923566879,
+    "meanBed": 4.165605095541402,
+    "meanBath": 2.445859872611465,
+    "meanCar": 2.0764331210191083,
+    "count": 314
+  },
+  "Earlwood": {
+    "meanPrice": 1453842.5702811244,
+    "meanBed": 3.216867469879518,
+    "meanBath": 1.6746987951807228,
+    "meanCar": 1.9839357429718876,
+    "count": 249
+  },
+  "Engadine": {
+    "meanPrice": 987760.9407114624,
+    "meanBed": 3.600790513833992,
+    "meanBath": 1.6719367588932805,
+    "meanCar": 1.7865612648221343,
+    "count": 253
+  },
+  "Glenmore Park": {
+    "meanPrice": 792325.6876033058,
+    "meanBed": 3.8578512396694213,
+    "meanBath": 1.9272727272727272,
+    "meanCar": 1.940495867768595,
+    "count": 605
+  },
+  "Glenwood": {
+    "meanPrice": 1030880.5705128205,
+    "meanBed": 4.080128205128205,
+    "meanBath": 2.1378205128205128,
+    "meanCar": 1.983974358974359,
+    "count": 312
+  },
+  "Gregory Hills": {
+    "meanPrice": 699373.54,
+    "meanBed": 3.7914285714285714,
+    "meanBath": 2.12,
+    "meanCar": 1.5314285714285714,
+    "count": 350
+  },
+  "Greystanes": {
+    "meanPrice": 897946.3770491803,
+    "meanBed": 3.5737704918032787,
+    "meanBath": 1.659016393442623,
+    "meanCar": 1.701639344262295,
+    "count": 305
+  },
+  "Guildford": {
+    "meanPrice": 851765.0821917808,
+    "meanBed": 3.5616438356164384,
+    "meanBath": 1.6986301369863013,
+    "meanCar": 1.773972602739726,
+    "count": 292
+  },
+  "Harrington Park": {
+    "meanPrice": 958016.1623616236,
+    "meanBed": 4.276752767527675,
+    "meanBath": 2.302583025830258,
+    "meanCar": 2.2103321033210332,
+    "count": 271
+  },
+  "Ingleburn": {
+    "meanPrice": 691733.8876404495,
+    "meanBed": 3.49812734082397,
+    "meanBath": 1.5617977528089888,
+    "meanCar": 1.6816479400749065,
+    "count": 267
+  },
+  "Kellyville": {
+    "meanPrice": 1226079.3698630137,
+    "meanBed": 4.251712328767123,
+    "meanBath": 2.357876712328767,
+    "meanCar": 2.171232876712329,
+    "count": 584
+  },
+  "Marrickville": {
+    "meanPrice": 1465085.8848920863,
+    "meanBed": 2.8956834532374103,
+    "meanBath": 1.381294964028777,
+    "meanCar": 0.9388489208633094,
+    "count": 278
+  },
+  "Marsden Park": {
+    "meanPrice": 788559.6985294118,
+    "meanBed": 3.926470588235294,
+    "meanBath": 2.1911764705882355,
+    "meanCar": 1.713235294117647,
+    "count": 272
+  },
+  "Merrylands": {
+    "meanPrice": 922634.3603896104,
+    "meanBed": 3.3896103896103895,
+    "meanBath": 1.6071428571428572,
+    "meanCar": 1.6428571428571428,
+    "count": 308
+  },
+  "Mosman": {
+    "meanPrice": 3493552.2260273974,
+    "meanBed": 3.863013698630137,
+    "meanBath": 2.3767123287671232,
+    "meanCar": 1.6986301369863013,
+    "count": 292
+  },
+  "Mount Annan": {
+    "meanPrice": 747290.7547169811,
+    "meanBed": 3.943396226415094,
+    "meanBath": 2.0037735849056606,
+    "meanCar": 1.9283018867924528,
+    "count": 265
+  },
+  "Oran Park": {
+    "meanPrice": 790021.1020408163,
+    "meanBed": 4.071428571428571,
+    "meanBath": 2.2108843537414966,
+    "meanCar": 1.880952380952381,
+    "count": 294
+  },
+  "Paddington": {
+    "meanPrice": 2430731.5175097277,
+    "meanBed": 2.9610894941634243,
+    "meanBath": 1.7315175097276265,
+    "meanCar": 0.5603112840466926,
+    "count": 257
+  },
+  "Pymble": {
+    "meanPrice": 2559138.3387755104,
+    "meanBed": 4.302040816326531,
+    "meanBath": 2.5387755102040814,
+    "meanCar": 2.085714285714286,
+    "count": 245
+  },
+  "Ryde": {
+    "meanPrice": 1737170.9414225942,
+    "meanBed": 3.698744769874477,
+    "meanBath": 1.9874476987447698,
+    "meanCar": 1.9163179916317992,
+    "count": 239
+  },
+  "Seven Hills": {
+    "meanPrice": 778090.0856353592,
+    "meanBed": 3.403314917127072,
+    "meanBath": 1.4530386740331491,
+    "meanCar": 1.632596685082873,
+    "count": 362
+  },
+  "South Penrith": {
+    "meanPrice": 676976.5612648221,
+    "meanBed": 3.430830039525692,
+    "meanBath": 1.4150197628458498,
+    "meanCar": 1.826086956521739,
+    "count": 253
+  },
+  "Turramurra": {
+    "meanPrice": 2059068.6160337552,
+    "meanBed": 3.9957805907172994,
+    "meanBath": 2.3839662447257384,
+    "meanCar": 1.9071729957805907,
+    "count": 237
+  },
+  "Wahroonga": {
+    "meanPrice": 2025628.5224489796,
+    "meanBed": 4.163265306122449,
+    "meanBath": 2.4,
+    "meanCar": 2.061224489795918,
+    "count": 245
+  },
+  "West Pennant Hills": {
+    "meanPrice": 1711962.783171521,
+    "meanBed": 4.343042071197411,
+    "meanBath": 2.627831715210356,
+    "meanCar": 2.411003236245955,
+    "count": 309
+  }
+}
