@@ -47,6 +47,19 @@ moves its price far more than an extra bedroom does.
    `color-contrast` disabled (it needs real paint, which `jsdom` doesn't have)
    —
    [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267).
+5. **Ruling out a false alarm instead of either ignoring it or writing a fix
+   for a bug that wasn't there.** The rubric names two things a marker
+   actually does: tab through the interaction and resize mid-use. Both held
+   up — tab order is clean (Home → suburb → bed → bath → car), and resizing
+   from desktop to phone mid-interaction, without a reload, kept the model's
+   state and a legible layout. But driving the suburb `<select>` with a
+   scripted `ArrowDown` changed nothing, and I didn't take that at face
+   value either way: the same key press moved the bed slider correctly
+   seconds earlier on the same page, which isolates the failure to headless
+   Chromium's synthetic key events against a native `<select>` popup, not to
+   this page. Nothing needed fixing; the finding itself — and how it was
+   ruled out — is what's recorded —
+   [`f09d56c`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/f09d56c).
 
 ## A note on how this week was directed
 
