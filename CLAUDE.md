@@ -196,3 +196,15 @@ says about the developer you're becoming.
   passed clean on the first real run, which isn't proof of nothing to fix:
   `color-contrast` is disabled because `jsdom` can't paint, so it's still a
   screenshot check, not this one.
+- **A scripted keyboard test that changes nothing isn't proof the control is
+  broken -- rule out the tool before you believe the page.** Driving the
+  suburb `<select>` with `agent-browser press ArrowDown` (and separately,
+  `Space` then `ArrowDown` then `Enter`) left its value and the price
+  unchanged. Before treating that as a real accessibility bug I checked
+  whether keyboard dispatch worked at all on the same page: `ArrowRight` on
+  the bed slider, tested seconds later with the same tool, moved it 3 to 4
+  and the price updated live. That isolates the failure to headless
+  Chromium's synthetic key events against a native `<select>`'s OS-level
+  popup, not to this page -- a known limitation of automating that specific
+  control headlessly, not evidence it's unusable in a real windowed browser
+  (which this couldn't test).
