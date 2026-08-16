@@ -52,3 +52,39 @@ describe("accessibility: every page", () => {
     });
   }
 });
+
+// axe-core doesn't flag this: it checks the DOM as it renders, not what a
+// screen reader hears across an interaction. The price output announces its
+// own updates (aria-live="polite"), but the four breakdown bars below it --
+// the whole "why" of the page -- didn't, so a screen reader user dragging a
+// slider would hear the total change and nothing explaining it. This test
+// pins the fix structurally (DOM, no paint needed) so a future edit that
+// drops the attribute fails here instead of only showing up in a screen
+// reader nobody ran.
+describe("index.html: breakdown values announce to screen readers", () => {
+  const home = pages.find((p) => p.name === "index.html");
+
+  it("exists", () => {
+    expect(home).toBeTruthy();
+  });
+
+  const dynamicOutputIds = [
+    "price-value",
+    "suburb-value",
+    "bed-effect-value",
+    "bath-effect-value",
+    "car-effect-value",
+  ];
+
+  for (const id of dynamicOutputIds) {
+    it(`#${id} is in an aria-live region`, () => {
+      const dom = new JSDOM(home!.html, { url: "http://localhost/" });
+      const el = dom.window.document.getElementById(id);
+      expect(el, `#${id} not found in built index.html`).toBeTruthy();
+      expect(
+        el!.closest("[aria-live]"),
+        `#${id} has no aria-live attribute (or ancestor) -- its updates are silent to screen readers`,
+      ).toBeTruthy();
+    });
+  }
+});
