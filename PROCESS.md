@@ -1,65 +1,67 @@
 # Process overview
 
 A Sydney house-price predictor: pick a suburb, drag the bed/bath/car sliders,
-and watch a live prediction come out of a model trained on 9,714 real house
-sales (2017–2019) across the 30 Sydney suburbs with the most sales in that
-period. Below the price, the prediction breaks into signed dollar bars —
-suburb, bedrooms, bathrooms, car spaces — all on one shared scale, so the
-point is obvious at a glance: which suburb a house sits in moves the price a
-lot more than an extra bedroom does.
+and watch a live prediction from a model trained on 9,714 real house sales
+(2017–2019) across Sydney's 30 highest-volume suburbs. The prediction breaks
+into signed dollar bars — suburb, bedrooms, bathrooms, car spaces — on one
+shared scale, so the point is obvious at a glance: suburb moves the price far
+more than an extra bedroom does.
 
 ## The moments that mattered
 
-1. **Proving the model was actually correct without shipping the data it was
-   trained on.** The raw CSV is 11MB and I didn't want it in the repo, so the
-   spec's identity check — predict at a suburb's own average house, get back
-   that suburb's own average sale price, a real property of fixed-effects OLS
-   and not something I'm eyeballing — had nothing to check against. The
-   training script also writes `data/training-stats.json`: small per-suburb
-   averages, computed a completely different way from the OLS solve. That's
-   what's committed instead, so the test still catches a real training bug —
-   wrong centering, a misaligned dummy column — without the raw data ever
-   entering the repo —
+1. **Proving the model correct in two stages before trusting it on real
+   data.** The hand-rolled OLS solver first had to recover exact coefficients
+   on a noiseless synthetic line and match a textbook regression on a
+   scattered one — a wrong transpose or pivot shows up here as a wrong
+   number —
+   [`1343f94`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/1343f94).
+   The trained model needed the same discipline: the raw CSV is 11MB and I
+   didn't want it in the repo, so the identity check — predict at a suburb's
+   own average house, get back its own average sale price — had nothing to
+   check against. The training script also writes `data/training-stats.json`,
+   per-suburb averages computed a different way from the OLS solve, committed
+   instead — so the test still catches a real training bug without the raw
+   data entering the repo —
    [`9683619`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/9683619),
    [`8ba4c25`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/8ba4c25).
-2. **Actually driving the page instead of trusting the listener code, twice,
-   and getting a different answer each time.** First pass: operating every
-   control with `agent-browser` at both marking viewports caught something
-   the code alone hid — the suburb `<select>` changed its own value fine but
-   never fired the page's `input`-only listener, so the dropdown silently
-   stopped moving the price. Both `input` and `change` are wired on every
-   control now —
+2. **Actually driving the page instead of trusting the listener code,
+   twice.** First pass: operating every control with `agent-browser` caught
+   something the code alone hid — the suburb `<select>` changed its own value
+   fine but never fired the page's `input`-only listener, so the dropdown
+   silently stopped moving the price. Both `input` and `change` are wired now —
    [`374e0ff`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/374e0ff).
-   Second pass, testing keyboard access the same way: a scripted `ArrowDown`
-   on that same `<select>` did nothing, but the same key press had just moved
-   the bed slider correctly a few seconds earlier. That points at headless
-   Chromium's key handling on a native popup, not the page, so this time there
-   was nothing to fix — and saying so honestly felt like the more useful
-   result —
+   Second pass, testing keyboard access: a scripted `ArrowDown` on that same
+   `<select>` did nothing, but the same key press had just moved the bed
+   slider. That points at headless Chromium's key handling on a native
+   popup, not the page — nothing to fix, and saying so felt more useful —
    [`f09d56c`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/f09d56c).
 3. **Closing a gap the file itself admitted to.** The starter `CLAUDE.md` said
-   outright that nothing here measured accessibility. Instead of leaving that
-   as a disclaimer, `spec/accessibility.test.ts` now runs `axe-core` against
-   the built page as part of `pnpm check` (`color-contrast` turned off — it
-   needs real paint, which `jsdom` doesn't have) —
+   outright that nothing here measured accessibility. `spec/accessibility.test.ts`
+   now runs `axe-core` against the built page as part of `pnpm check`
+   (`color-contrast` off — it needs real paint `jsdom` doesn't have) —
    [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267).
 4. **A hand-checked number is still a claim, and my first one was wrong.**
-   `color-contrast` is disabled in `axe-core` because `jsdom` can't paint — a
-   disabled rule isn't a cleared one. Checking the breakdown bars' divider by
-   hand found it under WCAG's 3:1 floor and I fixed it, but against the wrong
-   background (white, not the page's actual `#f7f5f0`) — wrong number, right
-   verdict. Rather than trust arithmetic already caught out once,
-   `spec/contrast.test.ts` now runs the same WCAG formula, pinned against a
-   hand-computable case, against the real hex values in the built CSS —
-   `#999` was 2.61:1, fixed to `#767676` (4.17:1) — so a future regression
-   fails `pnpm check` on its own —
+   `color-contrast` is disabled because `jsdom` can't paint — a disabled rule
+   isn't a cleared one. Checking the divider by hand found it under WCAG's
+   3:1 floor, but against the wrong background (white, not the page's actual
+   `#f7f5f0`) — wrong number, right verdict. `spec/contrast.test.ts` now runs
+   the same formula against the real hex values in the built CSS — `#999`
+   was 2.61:1, fixed to `#767676` (4.17:1) — so a future regression fails
+   `pnpm check` on its own —
    [`333ac13`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/333ac13),
    [`394d376`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/394d376).
+5. **A gap axe-core can't see: what a whole interaction sounds like, not one
+   render.** The price output announces its own updates, but the four
+   breakdown bars beneath it — the page's whole "why" — had no `aria-live`,
+   so a screen reader user dragging a slider heard the total change and
+   nothing explaining it. Fixed on all four, pinned with a structural test —
+   no paint needed, unlike contrast — that fails if a future edit drops it —
+   [`4a4a976`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/4a4a976).
 
 ## A note on how this week was directed
 
 I picked the topic (a real-data house-price predictor over fixed-effects OLS)
-and the point of view (suburb matters more than bed/bath/car) myself. From
-there the agent did the data sourcing, the model design, and the UI build, and
-I reviewed the actual trained coefficients and the actual rendered page — not
-just green checks — before signing off on anything.
+and the point of view (suburb matters more than bed/bath/car) myself; the
+agent did the data sourcing, model design, and UI build, and I reviewed the
+actual coefficients and rendered page — not just green checks — before
+signing off.
