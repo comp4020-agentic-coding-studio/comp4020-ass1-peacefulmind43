@@ -1,26 +1,31 @@
 # Assignment 1 reflection
 
-**The breakthrough that moved the work forward:** the same realization kept
-showing up in different shapes, and the last time it showed up it was aimed
-at me. Training the model, I could have just read the coefficients and
-decided they looked plausible — instead the training script writes out
-`data/training-stats.json`, a second, independently computed set of numbers,
-so a real mathematical identity catches a wrong training bug instead of me
-eyeballing it. Once the UI was live, I could have read the listener code and
-called it correct — instead I drove the actual page and found the suburb
-dropdown silently doing nothing, because looking right and running right are
-two different questions. Testing keyboard access pointed the same discipline
-the other way: the dropdown really didn't respond to a scripted arrow key,
-and ruling that in as a headless-tool quirk took the same distrust of my own
-first read. The sharpest version was checking a colour contrast ratio by hand
-and fixing it — only to realise later I'd checked it against the wrong
-background. The number was wrong even though the fix happened to hold, so I
-stopped trusting my own arithmetic and wrote a test that computes it instead.
+The same realisation kept showing up in different shapes this week, and by
+the end it was aimed at me. Training the model, I could have just looked at
+the coefficients and decided they seemed plausible. Instead the training
+script writes out a second file, `data/training-stats.json` - per-group
+means from plain averaging, a separate code path from the OLS solve - so a
+real mathematical identity catches a wrong training bug instead of me
+eyeballing it.
 
-**What this changed about the developer I want to be:** I want "this looks
-correct" to stop being a stopping point — in code, in test coverage, and in
-my own checking, too. None of these were cases of sloppiness; everything read
-fine, including my own maths. Reading and verifying turned out to be
-different acts, and the only way to get the second one is to actually build
-or run the check — even, especially, on myself — not to get more confident
-about the first.
+Once the UI was running, I could have read the listener code and called it
+done. Instead I drove the page myself and found the suburb dropdown
+silently doing nothing, because looking right and running right turned out
+to be two different questions. Testing keyboard access pointed the same
+lesson in a different direction: the dropdown didn't respond to a
+scripted arrow key, and working out it was a headless-tool quirk, not a
+bug, took the same distrust of my own first read.
+
+The sharpest version was checking a colour contrast ratio by hand and
+"fixing" it, only to realise later I'd checked it against the wrong
+background. The number was wrong even though the fix happened to hold.
+That's when I stopped trusting my own arithmetic and wrote a test that
+computes it instead.
+
+What I want out of this, going forward, is for "this looks correct" to stop
+being a stopping point - in code, in test coverage, and in my own checking.
+None of these were cases of me being sloppy. Everything read fine at the
+time, including my own maths. Reading something and verifying it are
+different acts, and the only way to do that is to build or run the check
+yourself, even on your own work, instead of getting more confident about
+the first.
