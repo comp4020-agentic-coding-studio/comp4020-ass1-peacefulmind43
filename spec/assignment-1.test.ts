@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
+import model from "../data/model.json";
 import trainingStats from "../data/training-stats.json";
-import { breakdown, predictPrice, SUBURBS } from "../pricing";
+import { breakdown, predictPrice, SLIDER_RANGES, SUBURBS } from "../pricing";
 
 // Assignment 1's published spec, sorted (see spec/README.md for the split):
 //
@@ -64,5 +65,19 @@ describe("house price model", () => {
     const { base, suburbPremium, bedEffect, bathEffect, carEffect, total } = breakdown(input);
     expect(base + suburbPremium + bedEffect + bathEffect + carEffect).toBeCloseTo(total, 6);
     expect(total).toBeCloseTo(predictPrice(input), 6);
+  });
+
+  it("the headline's claim is true: the cheapest-to-priciest suburb gap beats the max bedroom swing", () => {
+    // index.html states this as a concrete number ("$2.73M ... worth more
+    // than five extra bedrooms"), computed from the trained model rather
+    // than typed by hand -- exactly the discipline the contrast fix already
+    // established (see CLAUDE.md's "Rules learned this week"): a claim in
+    // copy is only as good as the check that it still holds after a retrain.
+    const offsets = Object.values(model.suburbOffset);
+    const suburbSpread = Math.max(...offsets) - Math.min(...offsets);
+    const maxBedSwing = model.betaBed * (SLIDER_RANGES.bed[1] - SLIDER_RANGES.bed[0]);
+
+    expect(suburbSpread).toBeGreaterThan(maxBedSwing);
+    expect(suburbSpread).toBeCloseTo(2_730_125, -3);
   });
 });
