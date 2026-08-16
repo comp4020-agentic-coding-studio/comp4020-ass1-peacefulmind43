@@ -1,26 +1,24 @@
 # Assignment 1 reflection
 
-**The breakthrough that moved the work forward:** partway through building
-this predictor, I looked back at the commit history and noticed that most of
-the substantive work had landed within an 18-minute window. Every check was
-genuinely green and nothing in the content was fabricated, but the log
-itself didn't show a single moment where a result had been looked at before
-it was committed — it read like one dump, not a process. The breakthrough
-wasn't a code fix; it was deciding that mattered enough to restart this
-repo's history and rebuild the same prototype under one rule: nothing gets
-committed until I've actually run the checks, or actually watched the
-rendered page respond to a control, and said so out loud first. That
-discipline is what this repo's own commit trail now shows, and it cost real
-time — stopping to verify and sign off after every step is slower than
-batching would have been, which is exactly why skipping it is tempting.
+**The breakthrough that moved the work forward:** the same realization kept
+showing up in different shapes. Training the model, I could have just read
+the coefficients and decided they looked plausible — instead the training
+script writes out `data/training-stats.json`, a second, independently
+computed set of numbers, so a real mathematical identity catches a wrong
+training bug instead of me eyeballing it. Once the UI was live, I could have
+read the listener code and called it correct — instead I drove the actual
+page and found the suburb dropdown silently doing nothing, because looking
+right and running right are two different questions. Testing keyboard access
+the same way pointed the same discipline the other way: the dropdown really
+didn't respond to a scripted arrow key, and ruling that in as a headless-tool
+quirk rather than a real bug took the same distrust of my own first read.
+Wiring up `axe-core` instead of leaving `CLAUDE.md`'s own accessibility
+disclaimer alone was the same move again: don't leave a gap unmeasured just
+because nothing obviously proves it's broken.
 
-**What this changed about the developer I want to be:** I want to stop
-treating "the tests pass" as the finish line for a commit, and start
-treating "I checked this myself, in the moment, and decided it was right" as
-the actual finish line — those are different gates, and only the second one
-leaves behind a history that means something to someone reading it later
-rather than just to the code it produced. If process is genuinely part of
-what's graded here, then rushing to green and committing in bulk optimises
-for the wrong signal, however correct the underlying work already is. I'd
-rather build the habit of narrating the check as I do it than rely on
-reconstructing a believable story about it afterwards.
+**What this changed about the developer I want to be:** I want "this looks
+correct" to stop being a stopping point — in code, in test coverage, and in
+whatever checks both. None of these were cases of sloppiness; the code always
+read fine. Reading and verifying turned out to be different acts, and the
+only way to get the second one is to actually build or run the check, not to
+get more confident about the first.
