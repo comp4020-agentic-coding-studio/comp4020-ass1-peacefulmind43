@@ -35,22 +35,21 @@ more than an extra bedroom does.
    slider. That points at headless Chromium's key handling on a native
    popup, not the page — nothing to fix, and saying so felt more useful —
    [`f09d56c`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/f09d56c).
-3. **Closing a gap the file itself admitted to.** The starter `CLAUDE.md` said
-   outright that nothing here measured accessibility. `spec/accessibility.test.ts`
-   now runs `axe-core` against the built page as part of `pnpm check`
-   (`color-contrast` off — it needs real paint `jsdom` doesn't have) —
-   [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267).
-4. **A hand-checked number is still a claim, and my first one was wrong.**
-   `color-contrast` is disabled because `jsdom` can't paint — a disabled rule
-   isn't a cleared one. Checking the divider by hand found it under WCAG's
-   3:1 floor, but against the wrong background (white, not the page's actual
-   `#f7f5f0`) — wrong number, right verdict. `spec/contrast.test.ts` now runs
-   the same formula against the real hex values in the built CSS — `#999`
-   was 2.61:1, fixed to `#767676` (4.17:1) — so a future regression fails
-   `pnpm check` on its own —
+3. **Closing a gap the file admitted to, then finding the fix had its own
+   blind spot.** The starter `CLAUDE.md` said outright that nothing here
+   measured accessibility, so `spec/accessibility.test.ts` now runs
+   `axe-core` against the built page in `pnpm check` —
+   [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267) —
+   but `color-contrast` is disabled there because `jsdom` can't paint, and a
+   disabled rule isn't a cleared one. Checking the breakdown bars' divider by
+   hand found it under WCAG's 3:1 floor, but against the wrong background
+   (white, not the page's actual `#f7f5f0`) — wrong number, right verdict.
+   `spec/contrast.test.ts` now runs the same formula against the real hex
+   values in the built CSS — `#999` was 2.61:1, fixed to `#767676`
+   (4.17:1) — so a future regression fails `pnpm check` on its own —
    [`333ac13`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/333ac13),
    [`394d376`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/394d376).
-5. **A gap axe-core can't see: what a whole interaction sounds like, not one
+4. **A gap axe-core can't see: what a whole interaction sounds like, not one
    render.** The price output announces its own updates, but the four
    breakdown bars beneath it — the page's whole "why" — had no `aria-live`,
    so a screen reader user dragging a slider heard the total change and
