@@ -208,3 +208,13 @@ says about the developer you're becoming.
   popup, not to this page -- a known limitation of automating that specific
   control headlessly, not evidence it's unusable in a real windowed browser
   (which this couldn't test).
+- **`color-contrast` being disabled in `axe-core` doesn't mean contrast is
+  fine -- it means nobody's checking, so go check by hand.** The breakdown
+  bars' zero-baseline divider (`.bar-center`) was `#999` on white, 2.85:1 --
+  under the 3:1 floor for a meaningful graphical element, and invisible to
+  every automated sensor here: `jsdom` can't paint, so axe never evaluates
+  it, and nothing else in `pnpm check` looks at colour. Darkened to `#767676`
+  (4.54:1). The gap this closes was already named in a comment in
+  `spec/accessibility.test.ts` before this fix existed -- writing down "this
+  still needs a human look" is only worth anything if the look actually
+  happens.
