@@ -207,7 +207,13 @@ says about the developer you're becoming.
   Chromium's synthetic key events against a native `<select>`'s OS-level
   popup, not to this page -- a known limitation of automating that specific
   control headlessly, not evidence it's unusable in a real windowed browser
-  (which this couldn't test).
+  (which this couldn't test). Re-tested against the deployed site with a real
+  `Tab` to focus the `<select>` first, not a blind key press: same result,
+  same explanation. `grep` across `main.ts` confirms why that explanation
+  holds and not just this once -- there's no `keydown`/`keyup`/`preventDefault`
+  anywhere in it, so every control's keyboard behaviour is the browser's
+  native handling, not this app's code, and `spec/accessibility.test.ts` now
+  pins that absence so it fails loudly the day it stops being true.
 - **`color-contrast` being disabled in `axe-core` doesn't mean contrast is
   fine -- it means nobody's checking, and "go check by hand" doesn't stay
   checked.** The breakdown bars' zero-baseline divider (`.bar-center`) was

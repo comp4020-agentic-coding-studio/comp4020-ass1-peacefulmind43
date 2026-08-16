@@ -88,3 +88,23 @@ describe("index.html: breakdown values announce to screen readers", () => {
     });
   }
 });
+
+// CLAUDE.md's keyboard rule explains why a scripted ArrowDown on the suburb
+// <select> did nothing in headless Chromium: that tool can't dispatch key
+// events into a native <select>'s OS-level popup, which is a limitation of
+// automating that control, not of this page. The suburb select and all three
+// sliders are plain native form controls with only input/change listeners
+// (see main.ts) -- their keyboard behaviour is the browser's, not this app's,
+// so it can only break here if custom JS starts intercepting key events. This
+// pins that guarantee so it fails loudly if that ever happens.
+describe("main.ts: interactive controls keep their native keyboard behaviour", () => {
+  const source = readFileSync(resolve("main.ts"), "utf8");
+
+  it("attaches no keydown/keyup/keypress listener that could override a control's default key handling", () => {
+    expect(source).not.toMatch(/key(down|up|press)/i);
+  });
+
+  it("never calls preventDefault, the only way this file could block native keyboard behaviour", () => {
+    expect(source).not.toMatch(/preventDefault/);
+  });
+});
