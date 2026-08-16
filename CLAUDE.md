@@ -223,3 +223,23 @@ says about the developer you're becoming.
   the real background), and now a real regression -- not just this one -- 
   fails `pnpm check` automatically instead of waiting for someone to compute
   it by hand again.
+- **"Static and client-side" doesn't mean "fine on a slow connection" --
+  the gap between HTML parse and the deferred module script executing is a
+  real broken-looking window, and the only way to see it is to actually
+  block the script.** Routing `**/assets/*.js` to abort and reloading
+  showed it directly: an empty suburb `<select>`, sliders defaulted to the
+  browser's native 0-100 range, every price and bar blank. Nothing here
+  had ever simulated the page without its own JS. Fixed by giving
+  `index.html` static defaults equal to what `render()` produces for the
+  reference suburb at bed=3/bath=2/car=1 -- computed from `breakdown()`,
+  not typed by hand, the same rule the contrast fix already established --
+  with `main.ts`'s `suburbSelect.replaceChildren()` keeping the full
+  suburb list authoritative once the script does run.
+- **A copy claim about the data is a claim, not a caption -- it needs the
+  same test a computed number gets, or a retrain can make it quietly
+  false.** The headline states a specific comparison (the cheapest-to-
+  priciest suburb gap beats five extra bedrooms) computed once by hand
+  while writing the copy. `spec/assignment-1.test.ts` now asserts that
+  same inequality, and the $2.73M figure, against `data/model.json`
+  directly -- so if the model is ever retrained, a copy claim that no
+  longer holds fails `pnpm check` instead of shipping as a quiet lie.
