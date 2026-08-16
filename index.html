@@ -24,41 +24,46 @@
 
       <fieldset>
         <legend>Suburb</legend>
-        <select id="suburb" aria-label="Suburb"></select>
+        <select id="suburb" aria-label="Suburb">
+          <option value="Auburn">Auburn</option>
+        </select>
       </fieldset>
 
       <fieldset>
         <legend>Bedrooms</legend>
         <div class="slider-row">
-          <input type="range" id="bed" aria-label="Bedrooms" />
-          <output id="bed-value" for="bed"></output>
+          <input type="range" id="bed" aria-label="Bedrooms" min="1" max="6" step="1" value="3" />
+          <output id="bed-value" for="bed">3</output>
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Bathrooms</legend>
         <div class="slider-row">
-          <input type="range" id="bath" aria-label="Bathrooms" />
-          <output id="bath-value" for="bath"></output>
+          <input type="range" id="bath" aria-label="Bathrooms" min="1" max="5" step="1" value="2" />
+          <output id="bath-value" for="bath">2</output>
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Car spaces</legend>
         <div class="slider-row">
-          <input type="range" id="car" aria-label="Car spaces" />
-          <output id="car-value" for="car"></output>
+          <input type="range" id="car" aria-label="Car spaces" min="0" max="5" step="1" value="1" />
+          <output id="car-value" for="car">1</output>
         </div>
       </fieldset>
 
       <div class="stat-row">
         <div class="stat">
           <span class="stat-label">Estimated price</span>
-          <output class="stat-value" id="price-value" aria-live="polite"></output>
+          <output class="stat-value" id="price-value" aria-live="polite">$929,096</output>
         </div>
       </div>
 
-      <p id="base-caption" class="caption-note"></p>
+      <p id="base-caption" class="caption-note">
+        $1,073,689 is the model's estimate for Auburn at the training set's average house (3.8 bed, 2.0 bath, 1.8
+        car) &mdash; the baseline every bar below adjusts away from.
+      </p>
 
       <h2>Why: the price broken into its parts</h2>
       <p class="caption-note">
@@ -74,7 +79,7 @@
           <div class="bar-center"></div>
           <div class="bar-pos" id="suburb-pos"><div class="bar-fill bar-fill-pos"></div></div>
         </div>
-        <output class="bar-value" id="suburb-value" aria-live="polite"></output>
+        <output class="bar-value" id="suburb-value" aria-live="polite">+$0</output>
       </div>
 
       <div class="bar-row" id="bed-row">
@@ -84,7 +89,7 @@
           <div class="bar-center"></div>
           <div class="bar-pos" id="bed-pos"><div class="bar-fill bar-fill-pos"></div></div>
         </div>
-        <output class="bar-value" id="bed-effect-value" aria-live="polite"></output>
+        <output class="bar-value" id="bed-effect-value" aria-live="polite">-$89,720</output>
       </div>
 
       <div class="bar-row" id="bath-row">
@@ -94,7 +99,7 @@
           <div class="bar-center"></div>
           <div class="bar-pos" id="bath-pos"><div class="bar-fill bar-fill-pos"></div></div>
         </div>
-        <output class="bar-value" id="bath-effect-value" aria-live="polite"></output>
+        <output class="bar-value" id="bath-effect-value" aria-live="polite">+$1,170</output>
       </div>
 
       <div class="bar-row" id="car-row">
@@ -104,7 +109,7 @@
           <div class="bar-center"></div>
           <div class="bar-pos" id="car-pos"><div class="bar-fill bar-fill-pos"></div></div>
         </div>
-        <output class="bar-value" id="car-effect-value" aria-live="polite"></output>
+        <output class="bar-value" id="car-effect-value" aria-live="polite">-$56,044</output>
       </div>
 
       <p class="caption-note">

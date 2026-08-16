@@ -21,6 +21,11 @@ function signedCurrency(value: number): string {
   return `${value >= 0 ? "+" : ""}${currency.format(value)}`;
 }
 
+// index.html pre-seeds a single "Auburn" option so the dropdown isn't empty
+// before this script runs on a slow connection; replaceChildren() makes the
+// full SUBURBS list from model.json authoritative instead of appending onto
+// (and duplicating) that placeholder.
+suburbSelect.replaceChildren();
 for (const suburb of SUBURBS) {
   const option = document.createElement("option");
   option.value = suburb;
