@@ -209,12 +209,17 @@ says about the developer you're becoming.
   control headlessly, not evidence it's unusable in a real windowed browser
   (which this couldn't test).
 - **`color-contrast` being disabled in `axe-core` doesn't mean contrast is
-  fine -- it means nobody's checking, so go check by hand.** The breakdown
-  bars' zero-baseline divider (`.bar-center`) was `#999` on white, 2.85:1 --
-  under the 3:1 floor for a meaningful graphical element, and invisible to
-  every automated sensor here: `jsdom` can't paint, so axe never evaluates
-  it, and nothing else in `pnpm check` looks at colour. Darkened to `#767676`
-  (4.54:1). The gap this closes was already named in a comment in
-  `spec/accessibility.test.ts` before this fix existed -- writing down "this
-  still needs a human look" is only worth anything if the look actually
-  happens.
+  fine -- it means nobody's checking, and "go check by hand" doesn't stay
+  checked.** The breakdown bars' zero-baseline divider (`.bar-center`) was
+  `#999` against the page's actual `#f7f5f0` background, 2.61:1 -- under the
+  3:1 floor for a meaningful graphical element, and invisible to every
+  automated sensor here: `jsdom` can't paint, so axe never evaluates it, and
+  nothing else in `pnpm check` looked at colour. First fix was by hand
+  against the wrong background (white, not the page's actual cream) and
+  reported the wrong ratio -- caught by then building `spec/contrast.test.ts`,
+  a WCAG relative-luminance formula pinned against hand-computable cases
+  (black/white = 21:1) and run against the real hex values in the *built*
+  CSS, not a copy pasted into the test. Darkened to `#767676` (4.17:1 against
+  the real background), and now a real regression -- not just this one -- 
+  fails `pnpm check` automatically instead of waiting for someone to compute
+  it by hand again.
