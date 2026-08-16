@@ -43,6 +43,14 @@ lot more than an extra bedroom does.
    the built page as part of `pnpm check` (`color-contrast` turned off — it
    needs real paint, which `jsdom` doesn't have) —
    [`2249267`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/2249267).
+4. **Turning "nobody's checking that" into an actual check, on colour this
+   time.** `spec/accessibility.test.ts` disables `color-contrast` and says so
+   in a comment — but a disabled rule isn't a cleared one. Computing the
+   ratio by hand on the breakdown bars' zero-baseline divider found it really
+   was under WCAG's floor (`#999` on white, 2.85:1, below the 3:1 a
+   meaningful graphical element needs), sitting there unnoticed because
+   nothing automated could see it. Darkened to `#767676` (4.54:1) —
+   [`333ac13`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-peacefulmind43/commit/333ac13).
 
 ## A note on how this week was directed
 
